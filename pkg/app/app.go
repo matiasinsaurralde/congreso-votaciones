@@ -66,8 +66,15 @@ func (a *App) fetch(c *cli.Context) error {
 	return nil
 }
 
-func (a *App) process(c *cli.Context) error {
+func (a *App) classify(c *cli.Context) error {
 	if err := a.processor.Classify(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (a *App) extract(c *cli.Context) error {
+	if err := a.processor.Extract(); err != nil {
 		return err
 	}
 	return nil
@@ -83,14 +90,20 @@ func New(cfg *config.Config, logger zerolog.Logger) *App {
 			{
 				Name:    "descargar",
 				Aliases: []string{"d"},
-				Usage:   "Descargar datos de votaciones del SILPY",
+				Usage:   "Descargar documentos de votación del SILPY",
 				Action:  app.fetch,
 			},
 			{
-				Name:    "procesar",
-				Aliases: []string{"p"},
-				Usage:   "Procesar y transformar datos a JSON",
-				Action:  app.process,
+				Name:    "clasificar",
+				Aliases: []string{"c"},
+				Usage:   "Clasificar documentos de votación",
+				Action:  app.classify,
+			},
+			{
+				Name:    "extraer",
+				Aliases: []string{"e"},
+				Usage:   "Procesar y extraer datos de los documentos de votación",
+				Action:  app.extract,
 			},
 		},
 	}

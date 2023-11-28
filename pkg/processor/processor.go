@@ -280,12 +280,12 @@ func (p *Processor) Classify() error {
 	}
 }
 
-// Parse is the high level parsing step:
-func (p *Processor) Parse() error {
-	return nil
-}
-
-func (p *Processor) Transform() error {
+// Extract is the high level extraction step:
+func (p *Processor) Extract() error {
+	// Load documents into memory:
+	if err := p.loadDocuments(); err != nil {
+		return err
+	}
 	return nil
 }
 
